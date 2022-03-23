@@ -21,6 +21,9 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
 Route::post("/register", [App\Http\Controllers\UserController::class, 'register']);
 Route::post("/login", [App\Http\Controllers\UserController::class, 'login']);
 Route::get('/getAuthUser', [App\Http\Controllers\UserController::class, 'getAuthenticatedUser']);
+Route::get("/customers", [App\Http\Controllers\CustomersController::class, 'show']);
+Route::post("/customers", [App\Http\Controllers\CustomersController::class, 'store']);
+
 
 
 Route::group(['middleware' => ['jwt.verify:2, 1, 0']], function(){
@@ -33,7 +36,6 @@ Route::group(['middleware' => ['jwt.verify:2, 1, 0']], function(){
     });
 
     Route::group(['middleware' => ['jwt.verify:2,1']], function(){
-        Route::post("/customers", [App\Http\Controllers\CustomersController::class, 'store']);
         Route::post("/product", [App\Http\Controllers\ProductController::class, 'store']);
         Route::post("/order", [App\Http\Controllers\OrdersController::class, 'store']);
         Route::post("/detail", [App\Http\Controllers\DetailOrdersController::class, 'store']);
@@ -45,8 +47,6 @@ Route::group(['middleware' => ['jwt.verify:2, 1, 0']], function(){
         Route::put("/detail/{id_product}", [App\Http\Controllers\DetailOrdersController::class, 'update']);
 
     });
-
-Route::get("/customers", [App\Http\Controllers\CustomersController::class, 'show']);
 
 Route::get("/product", [App\Http\Controllers\ProductController::class, 'show']);
 

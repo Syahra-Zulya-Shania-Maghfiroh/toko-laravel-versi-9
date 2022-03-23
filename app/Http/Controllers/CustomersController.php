@@ -34,10 +34,16 @@ class CustomersController extends Controller
                 'password' => Hash::make($request->password)
             ]);
             if($simpan) {
-                return Response()->json(['status'=>1]);
+                return Response()->json([
+                    'message' => 'success add data!',
+                    'status'=>1
+                ]);
             }
             else {
-                return Response()->json(['status'=>0]);
+                return Response()->json([
+                    'message' => 'failed add data!',
+                    'status'=>0
+                ]);
             }
         }
         public function update($id_customers, Request $request)
@@ -62,19 +68,31 @@ class CustomersController extends Controller
                 'password' => $request->password
             ]);
             if($ubah) {
-                return Response()->json(['status' => 1]);
+                return Response()->json([
+                    'message' => 'success update data!',
+                    'status' => 1
+                ]);
             }
             else {
-                return Response()->json(['status' => 0]);
+                return Response()->json([
+                    'message' => 'failed update data!',
+                    'status' => 0
+                ]);
             }
     }
         public function destroy($id_customers){
         $hapus = Customers::where('id_customers', $id_customers)->delete();
         if($hapus){
-            return Response()->json(['status' => 1]);
+            return Response()->json([
+                'message' => 'success delete data!',
+                'status' => 1
+            ]);
         }
         else{
-            return Response()->json(['status' => 0]);
+            return Response()->json([
+                'message' => 'failed delete data!',
+                'status' => 0
+            ]);
         }
     }
          
