@@ -38,7 +38,7 @@ class PetugasController extends Controller
             }
         }
         public function update($id_petugas, Request $request)
-    {
+        {
         $validator=Validator::make($request->all(),
         [
             'nama_petugas' => 'required',

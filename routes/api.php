@@ -21,34 +21,38 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
 Route::post("/register", [App\Http\Controllers\UserController::class, 'register']);
 Route::post("/login", [App\Http\Controllers\UserController::class, 'login']);
 Route::get('/getAuthUser', [App\Http\Controllers\UserController::class, 'getAuthenticatedUser']);
-Route::get("/customers", [App\Http\Controllers\CustomersController::class, 'show']);
-Route::post("/customers", [App\Http\Controllers\CustomersController::class, 'store']);
 
+Route::get("/customers", [App\Http\Controllers\CustomersController::class, 'show']);
+Route::get("/customers/{id_customers}", [App\Http\Controllers\CustomersController::class, 'details']);
+Route::post("/customers", [App\Http\Controllers\CustomersController::class, 'store']);
+Route::put("/customers/{id_customers}", [App\Http\Controllers\CustomersController::class, 'update']);
+Route::delete("/customers/{id_customers}", [App\Http\Controllers\CustomersController::class, 'destroy']);
+
+Route::get("/product", [App\Http\Controllers\ProductController::class, 'show']);
+Route::get("/product/{id_product}", [App\Http\Controllers\ProductController::class, 'details']);
+Route::post("/product", [App\Http\Controllers\ProductController::class, 'store']);
+Route::post("/product/UploadProduct/{id_product}", [App\Http\Controllers\ProductController::class, 'uploadProduct']);
+Route::put("/product/{id_product}", [App\Http\Controllers\ProductController::class, 'update']);
+Route::delete("/product/{id_product}", [App\Http\Controllers\ProductController::class, 'destroy']);
 
 
 Route::group(['middleware' => ['jwt.verify:2, 1, 0']], function(){
 
     Route::group(['middleware' => ['jwt.verify:2']], function(){
-        Route::delete("/customers/{id_customers}", [App\Http\Controllers\CustomersController::class, 'destroy']);
-        Route::delete("/product/{id_product}", [App\Http\Controllers\ProductController::class, 'destroy']);
         Route::delete("/petugas/{id_petugas}", [App\Http\Controllers\PetugasController::class, 'destroy']);
         Route::delete("/detail/{id_product}", [App\Http\Controllers\DetailOrdersController::class, 'destroy']);
     });
 
     Route::group(['middleware' => ['jwt.verify:2,1']], function(){
-        Route::post("/product", [App\Http\Controllers\ProductController::class, 'store']);
         Route::post("/order", [App\Http\Controllers\OrdersController::class, 'store']);
         Route::post("/detail", [App\Http\Controllers\DetailOrdersController::class, 'store']);
 
-        Route::put("/customers/{id_customers}", [App\Http\Controllers\CustomersController::class, 'update']);
-        Route::put("/product/{id_product}", [App\Http\Controllers\ProductController::class, 'update']);
         Route::put("/petugas/{id_petugas}", [App\Http\Controllers\PetugasController::class, 'update']);
         Route::put("/order/{id_orders}", [App\Http\Controllers\OrdersController::class, 'update']);
         Route::put("/detail/{id_product}", [App\Http\Controllers\DetailOrdersController::class, 'update']);
 
     });
 
-Route::get("/product", [App\Http\Controllers\ProductController::class, 'show']);
 
 Route::get("/petugas", [App\Http\Controllers\PetugasController::class, 'show']);
 

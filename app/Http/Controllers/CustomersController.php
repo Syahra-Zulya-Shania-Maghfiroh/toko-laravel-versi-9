@@ -5,12 +5,29 @@ use App\Models\Customers;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Validator;
+use Illuminate\Support\Facades\DB;
+// header('Access-Control-Allow-Origin: *');
+header('Access-Control-Allow-Methods: *');
+header('Access-Control-Allow-Headers: *');
 
 class CustomersController extends Controller
 {
         public function show()
         {
             return Customers::all();
+        }
+        public function details($id_customers)
+        {
+            if(Customers::where('id_customers', $id_customers)){
+                $data_customers = DB::table('customers')
+                ->select('customers.id_customers', 'customers.nama', 'customers.alamat', 'customers.telp', 'customers.username', 'customers.password')
+                ->where('id_customers', $id_customers)
+                ->get();
+                return Response()->json($data_customers);
+            }
+            else{
+                return Response()->json(['message : not found']);
+            }
         }
         public function store(Request $request)
         {
